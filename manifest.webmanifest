@@ -1,0 +1,15 @@
+{
+  "name": "POS-CAN — Punto de venta para tiendas de barrio",
+  "short_name": "POS-CAN",
+  "description": "Controla inventario, fiados, caja y ganancias de tu tienda.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#f1f5f4",
+  "theme_color": "#0f766e",
+  "lang": "es",
+  "icons": [
+    { "src": "icons/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="96" fill="#0f766e"/>
+  <rect x="96" y="150" width="320" height="230" rx="28" fill="#fff"/>
+  <rect x="126" y="180" width="260" height="70" rx="12" fill="#f59e0b"/>
+  <g fill="#0f766e"><circle cx="160" cy="300" r="18"/><circle cx="220" cy="300" r="18"/><circle cx="280" cy="300" r="18"/><circle cx="340" cy="300" r="18"/></g>
+  <text x="256" y="455" font-family="Arial, sans-serif" font-size="64" font-weight="800" fill="#fff" text-anchor="middle">POS-CAN</text>
+</svg>
