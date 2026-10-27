@@ -927,5 +927,8 @@ actions.reset = () => {
 render();
 
 if ('serviceWorker' in navigator && location.protocol !== 'file:' && !window.POSCAN_SINGLE_FILE) {
-  navigator.serviceWorker.register('sw.js').catch(() => {});
+  // updateViaCache 'none': revisa sw.js en el servidor cada vez, para recibir actualizaciones.
+  navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' })
+    .then((reg) => reg.update())
+    .catch(() => {});
 }
