@@ -242,9 +242,9 @@ views.venta = () => {
         </div>`).join('')}
       <div class="total">${money(total)}</div>
       <div class="grid" style="grid-template-columns:1fr 1fr 1fr">
-        <button class="btn" data-action="checkout" data-method="efectivo" ${cart.length && session ? '' : 'disabled'}>💵 Efectivo</button>
-        <button class="btn secondary" data-action="checkout" data-method="transferencia" ${cart.length && session ? '' : 'disabled'}>📱 Transfer.</button>
-        <button class="btn accent" data-action="checkout" data-method="fiado" ${cart.length && session ? '' : 'disabled'}>📒 Fiado</button>
+        <button class="btn" data-action="checkout" data-method="efectivo" ${cart.length ? '' : 'disabled'}>💵 Efectivo</button>
+        <button class="btn secondary" data-action="checkout" data-method="transferencia" ${cart.length ? '' : 'disabled'}>📱 Transfer.</button>
+        <button class="btn accent" data-action="checkout" data-method="fiado" ${cart.length ? '' : 'disabled'}>📒 Fiado</button>
       </div>
     </section>
   </div>`;
@@ -303,6 +303,12 @@ actions['quick-item'] = () => openModal(`
   });
 
 actions.checkout = ({ method }) => {
+  // Con la caja cerrada, se pide abrirla y luego se continúa con el cobro.
+  if (!openSession()) {
+    toast('Primero abre la caja');
+    actions['open-cash']({}, null, () => actions.checkout({ method }));
+    return;
+  }
   const total = cart.reduce((a, l) => a + l.qty * l.price, 0);
   if (method === 'efectivo') {
     openModal(`
@@ -650,7 +656,7 @@ function historyTable(history) {
     }).join('')}</tbody></table></div></section>`;
 }
 
-actions['open-cash'] = () => {
+actions['open-cash'] = (_data, _el, then) => {
   const last = db.cashSessions.filter((s) => s.closedAt).at(-1);
   openModal(`
     <h2>Abrir caja</h2>
@@ -659,6 +665,8 @@ actions['open-cash'] = () => {
     ({ amount }) => {
       db.cashSessions.push({ id: uid(), openedAt: now(), openingAmount: num(amount), closedAt: null });
       save(); render(); toast('Caja abierta');
+      // Después de que se cierre este diálogo, para poder abrir el siguiente.
+      if (then) setTimeout(then);
     });
 };
 
