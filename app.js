@@ -391,20 +391,20 @@ views.inventario = () => {
       <button class="btn" data-action="new-product">+ Producto</button>
     </div>
     <div class="table-wrap"><table>
-      <thead><tr><th class="num">Stock</th><th>Producto</th><th class="num">Costo</th><th class="num">Precio</th><th class="num">Margen</th><th></th></tr></thead>
+      <thead><tr><th></th><th>Producto</th><th class="num">Costo</th><th class="num">Precio</th><th class="num">Margen</th><th class="num">Stock</th><th></th></tr></thead>
       <tbody>${list.length ? list.map((p) => {
         const margin = p.price ? Math.round(((p.price - p.cost) / p.price) * 100) : 0;
         return `<tr>
-          <td class="num">${p.stock <= p.minStock ? `<span class="badge red">${p.stock}</span>` : p.stock}</td>
+          <td style="white-space:nowrap"><button class="btn small accent" data-action="restock" data-id="${p.id}" title="Registrar compra">+ Stock</button></td>
           <td>${esc(p.name)}<div class="muted">${esc(p.category || '')}${p.barcode ? ' · ' + esc(p.barcode) : ''}</div></td>
           <td class="num">${money(p.cost)}</td>
           <td class="num">${money(p.price)}</td>
           <td class="num">${margin}%</td>
+          <td class="num">${p.stock <= p.minStock ? `<span class="badge red">${p.stock}</span>` : p.stock}</td>
           <td class="num" style="white-space:nowrap">
-            <button class="btn small accent" data-action="restock" data-id="${p.id}" title="Registrar compra">+ Stock</button>
             <button class="btn small secondary" data-action="edit-product" data-id="${p.id}">Editar</button>
           </td></tr>`;
-      }).join('') : '<tr><td colspan="6" class="empty">Sin productos</td></tr>'}</tbody>
+      }).join('') : '<tr><td colspan="7" class="empty">Sin productos</td></tr>'}</tbody>
     </table></div>
   </section>`;
 };
