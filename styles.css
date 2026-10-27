@@ -51,12 +51,17 @@ h3 { margin: 16px 0 8px; font-size: 1rem; }
   display: flex; justify-content: space-between; align-items: center;
   padding: 10px 16px; background: var(--brand); color: var(--on-brand);
 }
-.brand { font-weight: 800; font-size: 1.3rem; letter-spacing: .5px; }
+.brand { font-weight: 800; font-size: 1.3rem; letter-spacing: .5px; white-space: nowrap; flex-shrink: 0; }
 .logo { background: var(--accent); color: var(--on-accent); padding: 0 6px; border-radius: 6px; }
 .topbar-info { display: flex; gap: 8px; align-items: center; font-size: .85rem; }
-.pill { padding: 3px 10px; border-radius: 99px; background: rgba(255,255,255,.2); color: var(--on-brand); }
+.pill { padding: 3px 10px; border-radius: 99px; background: rgba(255,255,255,.2); color: var(--on-brand); white-space: nowrap; }
 .pill.open { background: var(--ok); }
 .pill.closed { background: var(--danger); }
+.pill.install { border: 0; font: inherit; cursor: pointer; background: var(--accent); color: var(--on-accent); font-weight: 700; }
+/* En pantallas angostas, el botón de instalar ocupa el lugar del nombre de la tienda. */
+@media (max-width: 480px) {
+  .topbar-info:has(.install:not([hidden])) #store-name { display: none; }
+}
 
 main { max-width: 1100px; margin: 0 auto; padding-block: 16px;
   padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }

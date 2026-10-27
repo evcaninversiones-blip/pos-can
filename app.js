@@ -927,6 +927,23 @@ actions.reset = () => {
 render();
 
 if ('serviceWorker' in navigator && location.protocol !== 'file:' && !window.POSCAN_SINGLE_FILE) {
+  // Botón propio para instalar la app (Chrome lo permite cuando cumple los requisitos).
+  let installPrompt = null;
+  const installBtn = document.getElementById('install-btn');
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    installPrompt = e;
+    installBtn.hidden = false;
+  });
+  installBtn.addEventListener('click', async () => {
+    if (!installPrompt) return;
+    installPrompt.prompt();
+    await installPrompt.userChoice;
+    installPrompt = null;
+    installBtn.hidden = true;
+  });
+  window.addEventListener('appinstalled', () => { installBtn.hidden = true; toast('App instalada'); });
+
   // updateViaCache 'none': revisa sw.js en el servidor cada vez, para recibir actualizaciones.
   navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' })
     .then((reg) => reg.update())

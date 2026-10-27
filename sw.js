@@ -1,6 +1,6 @@
 // Service worker: guarda la app en caché para que funcione sin internet.
 // Cambia la versión al publicar cambios para que los celulares reciban la nueva.
-const CACHE = 'poscan-v2';
+const CACHE = 'poscan-v3';
 const ASSETS = ['./', 'index.html', 'styles.css', 'app.js', 'manifest.webmanifest', 'icons/icon.svg', 'icons/icon-192.png', 'icons/icon-512.png'];
 
 self.addEventListener('install', (e) => {
